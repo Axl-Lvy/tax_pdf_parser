@@ -33,6 +33,18 @@ class Parser:
         self.threads_life = []
 
     def monitor(self, thread_index: int, app: tk.Tk):
+        """
+        The monitor function is a recursive function that checks if the thread at index
+        thread_index is alive. If it is, then it calls itself again after 100ms. If not,
+        then it sets the corresponding value in threads_life to False and starts the next
+        thread in line (if there are any left). This way we can ensure that only few threads
+        are running at once.
+
+        :param self: Represent the instance of the class.
+        :param thread_index: int: Identify the thread that is being monitored.
+        :param app: tk.Tk: Main app.
+        :return: The index of the thread that has finished.
+        """
         if self.threads[thread_index].is_alive():
             # check the thread every 100ms
             app.after(100, lambda: self.monitor(thread_index, app))
@@ -72,6 +84,17 @@ class Parser:
 
 class AsyncParser(Thread):
     def __init__(self, file_name: str, folder: str, chosen_type: str):
+        """
+        The __init__ function is called when the class is instantiated.
+        It sets up the attributes of an instance of a class.
+        In this case, it takes in three arguments: file_name, folder and chosen_type.
+
+        :param self: Represent the instance of the object itself.
+        :param file_name: str: Store the name of the file that is going to be created.
+        :param folder: str: Specify the folder where the file is located.
+        :param chosen_type: str: Determine the type of file that is being created.
+        :return: The object itself.
+        """
         super().__init__()
         self.file_name = file_name
         self.folder = folder
